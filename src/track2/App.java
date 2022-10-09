@@ -30,18 +30,28 @@ public class App {
 
         switch (step){
             case 1:
-                int fruitNum = 0;
+                //与えられた日数で起こりうる収穫数の場合のかずを格納する
+                final ArrayList<Long> yieldFruitsList = new ArrayList<>();
                 for(int currentDay = 0; currentDay < days; currentDay++){
-                    if(foundTreeList.size() == 0){
-                        final int maxTreeNum = Collections.max(treeList);
-                        final int maxTreeIndex = treeList.indexOf(maxTreeNum);
 
-                        foundTreeList.add(maxTreeNum);
-                        treeList.remove(maxTreeIndex);
-                    }else{
+                    //最も多い木を見つける
+                    final int maxTreeNum = Collections.max(treeList);
+                    final int maxTreeIndex = treeList.indexOf(maxTreeNum);
 
+                    //多い木を見つけてTreeListから削除する
+                    foundTreeList.add(maxTreeNum);
+                    treeList.remove(maxTreeIndex);
+
+                    //見つけた木の合計 * 残り日数を収穫数とする
+                    int sumFruits = 0;
+                    for(int yieldNum : foundTreeList){
+                        sumFruits += yieldNum;
                     }
+                    yieldFruitsList.add((long) sumFruits * (days - foundTreeList.size()));
                 }
+
+                //起こりうる事象の中で最も獲得数の多い木のみの数を出力する
+                System.out.println(Collections.max(yieldFruitsList));
                 break;
 
             case 2:
